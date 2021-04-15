@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ -n "$1" ]; then
+    export START_PROJECT=$1
+fi
+
+if [ -n "$2" ]; then
+    export START_COMMAND=${@:2}
+fi
+
+echo "START_PROJECT: $START_PROJECT"
+echo "START_COMMAND: $START_COMMAND"
+
+if [[ "$(stat -f -c %T  /app)" == "ext2/ext3" ]] && [ -n "$SKIP_SYNC_ON_FAST_FS" ]; then
+  echo "no need for sync"
+  cd "/app/$START_PROJECT"
+  echo "$START_COMMAND" | exec bash
+fi
+
+mkdir -p /tmp/app/ /tmp/.unison
+cd /tmp/.unison
+ln -s /*.prf .
+
+cd /tmp
+
+exec supervisord
