@@ -10,9 +10,9 @@ RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
     apt-get remove -y unzip && \
     rm -r /var/lib/apt/lists/*
 
-RUN dotnet tool install --global dotnet-ef
+RUN dotnet tool install --tool-path /usr/local/dotnet-tools dotnet-ef
 
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.dotnet/tools:/remote_debugger
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/dotnet-tools:/remote_debugger
 
 ENV UNISON_VERSION=2.51.3
 
