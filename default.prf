@@ -5,5 +5,4 @@ root = /tmp/app
 force = /app
 batch = true
 auto = true
-repeat = watch
 logfile = /dev/null

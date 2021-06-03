@@ -21,6 +21,10 @@ mkdir -p /tmp/app/ /tmp/.unison
 cd /tmp/.unison
 ln -fs /*.prf .
 
-cd /tmp
+# sync once
+unison sync
+echo "       SYNC ONCE DONE"        >&2
+echo "----------------------------" >&2
 
-exec supervisord
+cd "/tmp/app/$START_PROJECT"
+echo "$START_COMMAND" | exec bash
