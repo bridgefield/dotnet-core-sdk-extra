@@ -5,7 +5,12 @@ FROM mcr.microsoft.com/dotnet/core/sdk:${SDK_VERSION}
 RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
     echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
     apt-get update && \
-    apt-get install -y unzip supervisor inotify-tools && \
+    apt-get install -y \
+        unzip \
+        supervisor \
+        inotify-tools \
+        libgdiplus \
+        && \
     curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l /remote_debugger && \
     apt-get remove -y unzip && \
     rm -r /var/lib/apt/lists/*
@@ -14,7 +19,7 @@ RUN dotnet tool install --tool-path /usr/local/dotnet-tools dotnet-ef
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/dotnet-tools:/remote_debugger
 
-ENV UNISON_VERSION=2.51.3
+ENV UNISON_VERSION=2.51.4
 
 # debian unison is missing unison-fsmonitor so we install from source
 RUN apt-get update && \
