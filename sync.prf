@@ -1,5 +1,5 @@
 # Unison preferences
 include default
-ignore = Path */bin
-ignore = Path */obj
-ignore = Path .git
+ignore = Name bin
+ignore = Name obj
+ignore = Name .git

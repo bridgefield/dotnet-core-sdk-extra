@@ -36,6 +36,6 @@ RUN apt-get update && \
 ENV HOME=/tmp \
     UNISONLOCALHOSTNAME=localhost \
     START_PROJECT=MyProject \
-    START_COMMAND="/bin/bash -c 'sleep 3 && exec dotnet watch run'"
+    START_COMMAND="dotnet watch run"
 
 COPY . /
