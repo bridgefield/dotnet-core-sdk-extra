@@ -1,6 +1,6 @@
 ARG SDK_VERSION=3.1
 
-FROM mcr.microsoft.com/dotnet/core/sdk:${SDK_VERSION}
+FROM mcr.microsoft.com/dotnet/sdk:${SDK_VERSION}
 
 RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
     echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
