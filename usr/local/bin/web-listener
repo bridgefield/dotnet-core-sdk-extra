@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# first line is request
+read request
+
+# ignore the header
+while /bin/true; do
+    read header
+    [ "$header" == $'\r' ] && break
+done
+
+echo "HTTP/1.1 503 Service Unavailable"
+echo "Retry-After: 10"
+echo "Cache-Control: no-cache"
+echo "Content-type: text/html"
+echo -e "\n"
+echo '<html>'
+echo '<head>'
+echo '<title>Starting App...</title>'
+echo '<script type="text/javascript">window.setTimeout(function () { location.reload(); }, 10000)</script>'
+echo '</head>'
+echo '<body>Starting App...</body>'
+echo '</html>'
+echo '<!--'
+supervisorctl stop inetd 
+supervisorctl start app
+
+exit 0
