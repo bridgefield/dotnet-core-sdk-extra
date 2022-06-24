@@ -1,5 +1,4 @@
 ARG SDK_VERSION=3.1
-
 FROM mcr.microsoft.com/dotnet/sdk:${SDK_VERSION}
 
 RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
@@ -16,11 +15,12 @@ RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
     apt-get remove --assume-yes unzip && \
     rm -r /var/lib/apt/lists/*
 
-RUN dotnet tool install --tool-path /usr/local/dotnet-tools dotnet-ef
+ARG SDK_VERSION
+RUN dotnet tool install --no-cache --tool-path /usr/local/dotnet-tools dotnet-ef --version ${SDK_VERSION}
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/dotnet-tools:/remote_debugger
 
-ENV UNISON_VERSION=2.51.5
+ENV UNISON_VERSION=2.52.1
 
 # debian unison is missing unison-fsmonitor so we install from source
 RUN apt-get update --quiet && \
