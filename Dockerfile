@@ -9,14 +9,24 @@ RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup && \
         supervisor \
         inotify-tools \
         libgdiplus \
+        libldap-2.4-2 \
+        libldap-dev \
         libc6-dev \
+        eatmydata \
         && \
     curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l /remote_debugger && \
     apt-get remove --assume-yes unzip && \
-    rm -r /var/lib/apt/lists/*
+    rm -r /var/lib/apt/lists/* && \
+    cd /usr/lib && \
+    ln -s /usr/lib/x86_64-linux-gnu/libldap-2.4.so.2 libldap.so.2 && \
+    ln -s /usr/lib/x86_64-linux-gnu/liblber-2.4.so.2 liblber.so.2
 
 ARG SDK_VERSION
-RUN dotnet tool install --no-cache --tool-path /usr/local/dotnet-tools dotnet-ef --version ${SDK_VERSION}
+RUN dotnet tool install --no-cache --tool-path /usr/local/dotnet-tools dotnet-ef --version ${SDK_VERSION} && \
+    dotnet tool install --no-cache --tool-path /usr/local/dotnet-tools dotnet-gcdump && \
+    dotnet tool install --no-cache --tool-path /usr/local/dotnet-tools dotnet-trace && \
+    dotnet tool install --no-cache --tool-path /usr/local/dotnet-tools dotnet-stack && \
+    dotnet tool install --no-cache --tool-path /usr/local/dotnet-tools dotnet-counters
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/dotnet-tools:/remote_debugger
 
