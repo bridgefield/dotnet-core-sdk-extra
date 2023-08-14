@@ -46,7 +46,7 @@ RUN apt-get update --quiet && \
 
 RUN mkdir -p /state && chmod 1777 /state
 
-COPY --from=busybox:stable /bin/busybox /bin/
+COPY --from=busybox:stable-musl /bin/busybox /bin/
 
 RUN busybox adduser -D -H -u 1000 user0 && \
     busybox adduser -D -H -u 1001 user1 && \
